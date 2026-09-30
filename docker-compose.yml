@@ -1,0 +1,9 @@
+services:
+  productos-ms:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: products-reactive-ms
+    ports:
+      - "8080:8080"
+    restart: unless-stopped

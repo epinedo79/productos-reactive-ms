@@ -1,0 +1,12 @@
+spring:
+  application:
+    name: productos-reactive-ms
+  r2dbc:
+    url: r2dbc:h2:mem:///productosdb;DB_CLOSE_DELAY=-1
+    username: sa
+    password:
+  sql:
+    init:
+      mode: always
+server:
+  port: 8080

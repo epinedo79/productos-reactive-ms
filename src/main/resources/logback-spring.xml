@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<configuration>
+
+    <property name="LOG_PATH" value="D:/logs"/>
+    <property name="LOG_FILE" value="${LOG_PATH}/productos-ms.log"/>
+
+    <!-- ========================================================= -->
+    <!-- FORMATO DE LOG                                             -->
+    <!-- ========================================================= -->
+
+    <property name="CONSOLE_PATTERN"
+              value="%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n"/>
+
+    <property name="FILE_PATTERN"
+              value="%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n"/>
+
+
+    <!-- ========================================================= -->
+    <!-- APPENDER CONSOLA                                           -->
+    <!-- ========================================================= -->
+
+    <appender name="CONSOLE"
+              class="ch.qos.logback.core.ConsoleAppender">
+
+        <encoder>
+            <pattern>${CONSOLE_PATTERN}</pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+
+    </appender>
+
+
+    <!-- ========================================================= -->
+    <!-- APPENDER ARCHIVO                                           -->
+    <!-- ========================================================= -->
+
+    <appender name="FILE"
+              class="ch.qos.logback.core.rolling.RollingFileAppender">
+
+        <file>${LOG_FILE}</file>
+
+        <encoder>
+            <pattern>${FILE_PATTERN}</pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+
+
+
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+
+            <fileNamePattern>
+                ${LOG_PATH}/archive/productos-ms.%d{yyyy-MM-dd}.%i.log.gz
+            </fileNamePattern>
+
+            <maxFileSize>10MB</maxFileSize>
+
+            <maxHistory>30</maxHistory>
+
+            <totalSizeCap>1GB</totalSizeCap>
+
+        </rollingPolicy>
+
+    </appender>
+
+
+    <!-- ========================================================= -->
+    <!-- LOGGER DE LA APLICACIÓN                                    -->
+    <!-- ========================================================= -->
+
+    <logger name="com.microservice.productos"
+            level="INFO"
+            additivity="false">
+
+        <appender-ref ref="CONSOLE"/>
+        <appender-ref ref="FILE"/>
+
+    </logger>
+
+
+    <!-- ========================================================= -->
+    <!-- LOGGERS DE SPRING                                          -->
+    <!-- ========================================================= -->
+
+    <logger name="org.springframework"
+            level="INFO"/>
+
+    <logger name="org.springframework.web"
+            level="INFO"/>
+
+    <logger name="org.springframework.r2dbc"
+            level="INFO"/>
+
+
+    <!-- ========================================================= -->
+    <!-- ROOT LOGGER                                                -->
+    <!-- ========================================================= -->
+
+    <root level="INFO">
+
+        <appender-ref ref="CONSOLE"/>
+        <appender-ref ref="FILE"/>
+
+    </root>
+
+</configuration>
